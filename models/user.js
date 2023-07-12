@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const userSchema = new Schema({
     userName: {
         type: String,
-        required: true 
+        required: true
     },
     userId: {
         type: String,
@@ -13,9 +13,11 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true 
-    },      
-
+        required: true
+    },
+    avatar: String
+}, {
+    timestamps: true
 });
 
 const User = mongoose.model('User', userSchema);
