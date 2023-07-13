@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const pinController = require ('../controllers/pins')
+const pinController = require('../controllers/pins');
 
 // Define routes for the pins
 
@@ -11,4 +11,4 @@ router.post('/', pinController.createPin);
 router.put('/:id', pinController.updatePin);
 router.delete('/:id', pinController.deletePin);
 
-module.export = router;
+module.exports = router;
