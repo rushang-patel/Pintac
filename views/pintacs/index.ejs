@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pintacs - Home</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Welcome to Pintacs</h1>
+  <h2>All Pins</h2>
+  <% pins.forEach(function(pin) { %>
+    <div class="pin">
+      <h3><%= pin.title %></h3>
+      <p><%= pin.description %></p>
+      <img src="<%= pin.image %>" alt="Pin Image">
+    </div>
+  <% }); %>
+</body>
+</html>
