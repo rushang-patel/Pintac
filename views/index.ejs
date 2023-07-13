@@ -1,5 +1,15 @@
 <%- include('./partials/header') %>
 
 <h2>Home Page</h2>
-
+<div class="pins">
+    {% for pin in pins %}
+      <div class="pin">
+        <img src="{{ pin.image }}" alt="{{ pin.title }}">
+        <a href="/pintacs/pin" <%- title === 'All pins' ? 'class="active"' : '' %>>
+        <h3>{{ pin.title }}</h3>
+        <p>{{ pin.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
 <%- include('./partials/footer') %>
+
