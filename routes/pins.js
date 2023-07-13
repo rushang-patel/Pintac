@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const pinController = require('../controllers/pins');
+
+// Define routes for the pins
+
+router.get('/', pinController.getAllPins);
+router.get('/:id', pinController.getPinById);
+router.post('/', pinController.createPin);
+router.put('/:id', pinController.updatePin);
+router.delete('/:id', pinController.deletePin);
 
 module.exports = router;

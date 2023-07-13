@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <nav>
+    <img src="/images/camera.svg">
+    <a href="/Pintac" <%- title === 'All Pins' ? 'class="active"' : '' %>>ALL Pins</a>
+    <% if (user) { %>
+      <a href="/Boards/new"	<%- title === 'Add Board' ? 'class="active"' : '' %>>
+          ADD Board</a>
+      <a href="/Pintac/new" <%- title === 'Add Pin' ? 'class="active"' : '' %>>ADD Pin</a>
+      <a href="/logout">LOG OUT</a>
+    <% } else { %>
+      <a href="/auth/google" class="login">LOG IN&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+    <% } %>
+  </nav>
+  

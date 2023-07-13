@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 34px;
+}
+
+.login img {
+  height: 30px;
+}
+.board-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-user img {
+  border-radius: 50%;
+  height: 40px;
+}
