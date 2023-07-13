@@ -95,7 +95,7 @@ async function pin(req, res) {
  
   
 
-=======
+
 const board = require('../pin/board');
 
 module.exports = {
