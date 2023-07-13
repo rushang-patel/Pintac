@@ -62,10 +62,22 @@ const deletePin = async (req, res) => {
   }
 };
 
+const createComment = async (req, res) => {
+  try {
+    const comment = new Comment(req.body);
+    const savedComment = await comment.save();
+    res.status(201).json(savedComment);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create comment" });
+  }
+};
+
+
 module.exports = {
   getAllPins,
   getPinById,
   createPin,
   updatePin,
   deletePin,
+  createComment,
 };

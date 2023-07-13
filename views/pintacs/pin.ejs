@@ -3,6 +3,17 @@
 <head>
   <title>Pintacs - Pin Details</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+  <title>Comment Section</title>
+  <style>
+    /* Add some basic styles for the comment section */
+    .comment-section {
+      margin-bottom: 20px;
+    }
+    .comment {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>Pin Details</h1>
@@ -11,5 +22,19 @@
     <p><%= pin.description %></p>
     <img src="<%= pin.image %>" alt="Pin Image">
   </div>
+  
+  <div class="comment-section">
+    <h2>Comments</h2>
+    <div id="comments"></div> <!-- Placeholder for displaying comments -->
+    <form id="comment-form">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <textarea id="comment" placeholder="Your Comment" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Include JavaScript to handle form submission and fetching comments -->
+  <script src="script.js"></script>
+
 </body>
 </html>
