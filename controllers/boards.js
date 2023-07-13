@@ -17,7 +17,7 @@ async function create(req, res) {
     // Save the new board to the database
     const savedBoard = await newBoard.save();
     // Return the saved board as the response
-    res.status(201).json(savedBoard); 
+    res.status(201).json(savedBoard);
   } catch (error) {
     console.error("Error creating board:", error);
     res.status(500).json({ error: "Server error" });
@@ -37,7 +37,7 @@ async function show(req, res) {
     }
 
     // Return the board as the response
-    res.json(board); 
+    res.json(board);
   } catch (error) {
     console.error("Error retrieving board:", error);
     res.status(500).json({ error: "Server error" });
