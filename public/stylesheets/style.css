@@ -17,3 +17,13 @@ a {
 .login img {
   height: 30px;
 }
+.board-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board-user img {
+  border-radius: 50%;
+  height: 40px;
+}
