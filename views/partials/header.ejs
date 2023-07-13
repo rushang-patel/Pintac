@@ -8,13 +8,13 @@
 <body>
   <nav>
     <a href="/Pintac" <%- title === 'All Pins' ? 'class="active"' : '' %>>ALL Pins</a>
-    <a href="/Boards/new"	<%- title === 'Add Board' ? 'class="active"' : '' %>>ADD Board</a>
-    <a href="/Pintac/new" <%- title === 'Add Pin' ? 'class="active"' : '' %>>ADD Pin</a>
-    <a href="/auth/google" class="login">LOG IN</a>
-    <a href="/logout">LOG OUT</a>
-    
-      
-   
-    
-
+    <% if (user) { %>
+      <a href="/Boards/new"	<%- title === 'Add Board' ? 'class="active"' : '' %>>
+          ADD Board</a>
+      <a href="/Pintac/new" <%- title === 'Add Pin' ? 'class="active"' : '' %>>ADD Pin</a>
+      <a href="/logout">LOG OUT</a>
+    <% } else { %>
+      <a href="/auth/google" class="login">LOG IN&nbsp;&gt;</a>
+    <% } %>
+  </nav>
   
