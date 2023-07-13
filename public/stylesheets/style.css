@@ -27,3 +27,25 @@ a {
   border-radius: 50%;
   height: 40px;
 }
+.pins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.pin {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  border: 1px solid black;
+}
+.pin img {
+  width: 100%;
+  height: 100%;
+}
+.pin h3 {
+  margin: 0;
+}
+.pin p {
+  margin: 0;
+}
