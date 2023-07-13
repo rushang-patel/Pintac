@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
-const title = new Schema ({
+const boardSchema = new Schema({
     content: {
         type: String,
         required: true
@@ -12,16 +11,20 @@ const title = new Schema ({
         required :false,
     },
     user_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     pins: {
-        type: Array,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pin',
         required: true,
         default: [favorites],
     },
     numberOfPins: {
-        type: number,
+        type: Number,
         required: true
     },
-})
+});
+
+module.exports = mongoose.model('Board', boardSchema);
