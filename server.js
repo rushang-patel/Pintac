@@ -13,7 +13,6 @@ require('./config/database');
 require('./config/passport');
 
 var indexRouter = require('./routes/index');
-
 var app = express();
 
 // view engine setup
