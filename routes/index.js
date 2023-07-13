@@ -37,8 +37,12 @@ router.get('/oauth2callback', passport.authenticate(
 
 // OAuth logout route
 router.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/Pintac');
+  req.logout(function(err) {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/'); // Redirect to the main page
+  });
 });
 
 // User creation route
