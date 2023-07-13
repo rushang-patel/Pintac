@@ -1,5 +1,14 @@
 <%- include('./partials/header') %>
 
 <h2>Home Page</h2>
+<div class="pins">
+  <% for (let pin of pins) { %>
+    <div class="pin">
+      <img src="<%= pin.image %>" alt="<%= pin.title %>">
+      <h3><a href="/pintacs/pin/<%= pin.id %>" <%= pin.title === 'All pins' ? 'class="active"' : '' %>><%= pin.title %></a></h3>
+      <p><%= pin.description %></p>
+    </div>
+  <% } %>
+</div>
 
 <%- include('./partials/footer') %>
