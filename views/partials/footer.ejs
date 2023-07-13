@@ -1,3 +1,25 @@
-</main>
-</body>
-</html>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+
+<footer>
+    <div class="footer-content">
+      <nav>
+        <ul id="footer-menu">
+          <li><a href="/views/pintacs/pin.ejs">PINS</a></li>
+          <li><a href="/views/pintacs/board.ejs">BOARDS</a></li>
+        </ul>
+      </nav>
+      <p>&copy; 2023 PINTAC. All rights reserved.</p>
+      <p>Contact: info.contact@help.com</p>
+    </div>
+  </footer>
+  
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const menuItems = document.querySelectorAll('#footer-menu li');
+      menuItems.forEach((item) => {
+        item.style.display = 'inline-block';
+        item.style.marginRight = '10px';
+      });
+    });
+  </script>
+  

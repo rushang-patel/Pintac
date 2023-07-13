@@ -1,7 +1,7 @@
-body {
+/* body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+} */
 
 a {
   color: #00B7FF;
@@ -48,4 +48,14 @@ a {
 }
 .pin p {
   margin: 0;
+}
+
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+footer{
+  margin-top: auto;
+  text-align: center;
 }

@@ -2,11 +2,17 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user'); // Import the User model
+const Pin = require('../models/pin');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  // Pass the title and user variables to the template
-  res.render('index', { title: 'Pintac', user: req.user });
+router.get('/', async function(req, res, next) {
+  try {
+    const pins = await Pin.find();
+    res.render('index', { title: 'Pintac', user: req.user, pins });
+  } catch (error) {
+    console.error('Error retrieving pins:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Google OAuth login route
