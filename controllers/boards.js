@@ -4,14 +4,9 @@ const Pin = require('../models/pin');
 
 //Define methods for boards: create a new board, view a specific board, save a pin to board 
 
-module.exports = {
-    index,
-    show,
-    pin
-};
 
 //Show all boards
-async function index(req, res) {
+async function getAllBoards(req, res) {
     try {
       // Retrieve all boards from the database
       const boards = await Board.find();
@@ -23,10 +18,10 @@ async function index(req, res) {
     }
   }
   
-  module.exports = { index };
+
 
 //Create new board 
-async function create(req, res) {
+async function createBoard(req, res) {
     try {
         const { content, description, user_id } = req.body;
         const newBoard = new Board({
@@ -46,7 +41,9 @@ async function create(req, res) {
     }
   }
   
-  module.exports = { create };
+  
+
+//pins to a specific board  
 
 async function pin(req, res) {
     try {
@@ -83,33 +80,13 @@ async function pin(req, res) {
       res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
     }
   }
+
+  module.exports = {
+    getAllBoards,
+    createBoard,
+    pin
+};  
   
-  module.exports = { pin };
  
   
 
-
-const board = require('../pin/board');
-
-module.exports = {
-    create
-};
-
-async function create(req, res) {
-    const board = await board.findById(req.params.id);
-  
-    // Add the user-centric info to req.body (the new review)
-    req.body.user = req.user._id;
-    req.body.userName = req.user.name;
-    req.body.userAvatar = req.user.avatar;
-  
-    // We can push (or unshift) subdocs into Mongoose arrays
-    pin.board.push(req.body);
-    try {
-      // Save any changes made to the board doc
-      await board.save();
-    } catch (err) {
-      console.log(err);
-    }
-    res.redirect(`/Boards/${pin._id}`);
-  }

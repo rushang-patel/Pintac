@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const boardsCtrl = require('..controllers/boards');
+const boardsCtrl = require('../controllers/boards');
 
-//route handles request to retrieve a specific board based on ID 
-router.get('/:id', boardsCtrl.getBoard);
+//route handles to show all boards
+router.get('/', boardsCtrl.getAllBoards);
 
 //route that handles the request to create a new board
 //'maps the 'createBoard' method to the 'boardsCtrl' controller 
@@ -15,3 +15,4 @@ router.post('/:boardId/pin', boardsCtrl.pin);
 
 
 
+module.exports = router;

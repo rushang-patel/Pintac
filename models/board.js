@@ -19,7 +19,7 @@ const boardSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pin',
         required: true,
-        default: [favorites],
+        default: [],
     },
     numberOfPins: {
         type: Number,
