@@ -1,8 +1,6 @@
 const Board = require("../models/board");
 const Pin = require("../models/pin");
 
-// Define methods for boards: create a new board, view a specific board, save a pin to board
-
 // Create a new board
 async function create(req, res) {
   try {
