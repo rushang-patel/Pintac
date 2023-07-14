@@ -2,36 +2,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const boardSchema = new Schema({
-  content: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: false
-  },
-  user_id: {
-    type: String,
-    required: true
-  },
-  pins: {
-    type: Array,
-    required: true,
-    default: [] // Corrected default value
-  },
-  numberOfPins: {
-    type: Number, // Corrected capitalization
-    required: true
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  userName: String,
-  userAvatar: String
-}, {
-  timestamps: true
+    content: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required :false,
+    },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    pins: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pin',
+        required: true,
+        default: [],
+    },
+    numberOfPins: {
+        type: Number,
+        required: true
+    },
+
 });
 
 const Board = mongoose.model('Board', boardSchema);
