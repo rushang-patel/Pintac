@@ -10,17 +10,9 @@ const getAllPins = async (req, res) => {
   }
 };
 
-// Get a pin by ID from the database
-const getPinById = async (req, res) => {
-  try {
-    const pin = await Pin.findById(req.params.id);
-    if (!pin) {
-      return res.status(404).json({ error: "Pin not found" });
-    }
-    res.status(200).json(pin);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch pin" });
-  }
+// Render the new pin form
+const renderNewPinForm = (req, res) => {
+  res.render('pintacs/new', { title: 'New Pin' });
 };
 
 // Create a new pin
@@ -31,6 +23,19 @@ const createPin = async (req, res) => {
     res.status(201).json(savedPin);
   } catch (error) {
     res.status(500).json({ error: "Failed to create pin" });
+  }
+};
+
+// Get a pin by ID from the database
+const getPinById = async (req, res) => {
+  try {
+    const pin = await Pin.findById(req.params.id);
+    if (!pin) {
+      return res.status(404).json({ error: "Pin not found" });
+    }
+    res.status(200).json(pin);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch pin" });
   }
 };
 
@@ -64,8 +69,10 @@ const deletePin = async (req, res) => {
 
 module.exports = {
   getAllPins,
-  getPinById,
+  renderNewPinForm,
   createPin,
+  getPinById,
   updatePin,
   deletePin,
 };
+
