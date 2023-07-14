@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const boardsCtrl = require('../controllers/boards');
+
+
 //route handles to show all boards
 router.get('/', boardsCtrl.getAllBoards);
 router.get('/new', boardsCtrl.renderNewBoardForm);
@@ -11,3 +13,4 @@ router.post('/', boardsCtrl.newBoard);
 //allows user to pin a pin to a specific board by board ID
 router.post('/:boardId/pin', boardsCtrl.pin);
 module.exports = router;
+

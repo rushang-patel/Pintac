@@ -20,29 +20,33 @@ async function create(req, res) {
     console.error("Error creating board:", error);
     res.status(500).json({ error: "Server error" });
   }
-}
+  
 
-// View a specific board
-async function show(req, res) {
-  try {
-    const { boardId } = req.params;
 
-    // Retrieve the board from the database based on the board ID
-    const board = await Board.findById(boardId);
+//Create new board 
+async function createBoard(req, res) {
+    try {
+        const { content, description, user_id } = req.body;
+        const newBoard = new Board({
+            content,
+            description,
+            user_id,
+            pins: [],
+            numberofPins: 0
+        });
+        //save the new board to the database 
+        const savedBoard = await newBoard.save(); 
 
-    if (!board) {
-      return res.status(404).json({ error: "Board not found" });
+        res.status(201).json(savedBoard); // Return the saved board as the response
+    } catch (error) {
+      console.error('Error creating board:', error);
+      res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
     }
-
-    // Return the board as the response
-    res.json(board);
-  } catch (error) {
-    console.error("Error retrieving board:", error);
-    res.status(500).json({ error: "Server error" });
   }
-}
+  
+  
 
-// Save a pin to a board
+//pins to a specific board  
 async function pin(req, res) {
   try {
     const { boardId } = req.params;
@@ -53,34 +57,11 @@ async function pin(req, res) {
     if (!board) {
       return res.status(404).json({ error: "Board not found" });
     }
-
-    // Create a new pin instance
-    const newPin = new Pin({
-      title,
-      description,
-      image,
-      user,
-      board: boardId,
-    });
-
-    // Save the new pin to the database
-    const savedPin = await newPin.save();
-
-    // Update the board's pins array and numberOfPins field
-    board.pins.push(savedPin._id);
-    board.numberOfPins = board.pins.length;
-    await board.save();
-
-    // Return the saved pin as the response
-    res.json(savedPin);
-  } catch (error) {
-    console.error("Error pinning to board:", error);
-    res.status(500).json({ error: "Server error" });
   }
-}
 
-module.exports = {
-  create,
-  show,
-  pin,
-};
+  module.exports = {
+    getAllBoards,
+    createBoard,
+    pin
+};  
+
