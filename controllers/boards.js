@@ -1,18 +1,24 @@
 const Board = require("../models/board");
 const Pin = require("../models/pin");
 
-// Define methods for boards: create a new board, view a specific board, save a pin to board
-//Show all boards
-async function getAllBoards(req, res) {
-    try {
-      // Retrieve all boards from the database
-      const boards = await Board.find();
-  
-      res.json(boards); // Return the boards as the response
-    } catch (error) {
-      console.error('Error retrieving boards:', error);
-      res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
-    }
+// Create a new board
+async function create(req, res) {
+  try {
+    const { content, description, user_id } = req.body;
+    const newBoard = new Board({
+      content,
+      description,
+      user_id,
+      pins: [],
+      numberOfPins: 0,
+    });
+    // Save the new board to the database
+    const savedBoard = await newBoard.save();
+    // Return the saved board as the response
+    res.status(201).json(savedBoard);
+  } catch (error) {
+    console.error("Error creating board:", error);
+    res.status(500).json({ error: "Server error" });
   }
   
 
