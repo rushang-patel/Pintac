@@ -2,15 +2,30 @@ const Board = require('../models/board');
 const Pin = require('../models/pin');
 
 
-//Define methods for boards: create a new board, view a specific board, save a pin to board \
-//Do we want to view ALL boards? index method needed
+//Define methods for boards: create a new board, view a specific board, save a pin to board 
 
 module.exports = {
-    create,
+    index,
     show,
     pin
 };
 
+//Show all boards
+async function index(req, res) {
+    try {
+      // Retrieve all boards from the database
+      const boards = await Board.find();
+  
+      res.json(boards); // Return the boards as the response
+    } catch (error) {
+      console.error('Error retrieving boards:', error);
+      res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
+    }
+  }
+  
+  module.exports = { index };
+
+//Create new board 
 async function create(req, res) {
     try {
         const { content, description, user_id } = req.body;
@@ -32,26 +47,6 @@ async function create(req, res) {
   }
   
   module.exports = { create };
-
-async function show(req, res) {
-  try {
-    const { boardId } = req.params;
-
-    // Retrieve the board from the database based on the board ID
-    const board = await Board.findById(boardId);
-
-    if (!board) {
-      return res.status(404).json({ error: 'Board not found' });
-    }
-
-    res.json(board); // Return the board as the response
-  } catch (error) {
-    console.error('Error retrieving board:', error);
-    res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
-  }
-}
-
-module.exports = { show };  
 
 async function pin(req, res) {
     try {
@@ -89,9 +84,7 @@ async function pin(req, res) {
     }
   }
   
-  module.exports = {
-    pin
-  };
+  module.exports = { pin };
  
   
 
