@@ -1,38 +1,23 @@
-<table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Description</th>
-
-        <td><%= r.Description %></td>
-          <!-- Add this td -->
-          <td>
-            <% if (user?._id.equals(r.user)) { %>
-              <form action="/boards/<%= r._id %>?_method=DELETE" method="POST">
-                <button type="post">X</button>
-              </form>
-            <% } %>
-          </td>
-      </tr>
-      <tr>
-        <td colspan="4">Already have a board? <a href="/boards">Go to boards!!!</a></td>
-      </tr>
-    </thead>
-    <tbody>
-      <% let total = 0 %>
-      <% pins.board.forEach(function(r) { %>
-        <% total += r.pins %>
-        <tr>
-          <td class="review-user"><img alt="avatar" src="<%= r.userAvatar %>" referrerpolicy="no-referrer"><%= r.userName %></td>
-          <td><%= r.createdAt.toLocaleDateString() %></td>
-          <td><%= r.content %></td>
-        </tr>
-      <% }); %>
-      <tr>
-        <td colspan="3"></td>
-        <td><strong><%= (total / pins.board.length).toFixed(1) %></strong></td>
-      </tr>
-    </tbody>
-  </table>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pintacs - New Pin</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Create a New Pin</h1>
+  <form method="POST" action="/pins">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    <label for="image">Image URL:</label>
+    <input type="text" id="image" name="image" required>
+    <br>
+    <input type="submit" value="Create Pin">
+  </form>
+  <%- include('./partials/footer') %>
+</body>
+</html>

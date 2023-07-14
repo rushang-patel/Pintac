@@ -1,10 +1,7 @@
-const Board = require('../models/board');
-const Pin = require('../models/pin');
+const Board = require("../models/board");
+const Pin = require("../models/pin");
 
-
-//Define methods for boards: create a new board, view a specific board, save a pin to board 
-
-
+// Define methods for boards: create a new board, view a specific board, save a pin to board
 //Show all boards
 async function getAllBoards(req, res) {
     try {
@@ -44,40 +41,15 @@ async function createBoard(req, res) {
   
 
 //pins to a specific board  
-
 async function pin(req, res) {
-    try {
-        //method to recieve board ID from request parameters and pin data from request body
-      const { boardId } = req.params;
-      const { title, description, image, user } = req.body;
-  
-      // Check if the board exists
-      const board = await Board.findById(boardId);
-      if (!board) {
-        return res.status(404).json({ error: 'Board not found' });
-      }
-  
-      // Create a new pin instance
-      const newPin = new Pin({
-        title,
-        description,
-        image,
-        user,
-        board: boardId
-      });
-  
-      // Save the new pin to the database
-      const savedPin = await newPin.save();
-  
-      // Update the board's pins array and numberOfPins field
-      board.pins.push(savedPin._id);
-      board.numberOfPins = board.pins.length;
-      await board.save();
-  
-      res.json(savedPin); // Return the saved pin as the response
-    } catch (error) {
-      console.error('Error pinning to board:', error);
-      res.status(500).json({ error: 'Server error' }); // Return an error response if something goes wrong
+  try {
+    const { boardId } = req.params;
+    const { title, description, image, user } = req.body;
+
+    // Check if the board exists
+    const board = await Board.findById(boardId);
+    if (!board) {
+      return res.status(404).json({ error: "Board not found" });
     }
   }
 
@@ -86,7 +58,4 @@ async function pin(req, res) {
     createBoard,
     pin
 };  
-  
- 
-  
 
