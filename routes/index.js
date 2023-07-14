@@ -1,11 +1,18 @@
-var express = require('express');
-var router = express.Router();
-// new code below
+const express = require('express');
+const router = express.Router();
 const passport = require('passport');
+const User = require('../models/user'); // Import the User model
+const Pin = require('../models/pin');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Pintac' });
+router.get('/', async function(req, res, next) {
+  try {
+    const pins = await Pin.find();
+    res.render('index', { title: 'Pintac', user: req.user, pins });
+  } catch (error) {
+    console.error('Error retrieving pins:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 // Google OAuth login route
@@ -23,16 +30,36 @@ router.get('/auth/google', passport.authenticate(
 router.get('/oauth2callback', passport.authenticate(
   'google',
   {
-    successRedirect: '/Pintac',
-    failureRedirect: '/Pintac'
+    successRedirect: '/',
+    failureRedirect: '/login'
   }
 ));
 
 // OAuth logout route
 router.get('/logout', function(req, res){
-  req.logout(function() {
-    res.redirect('/Pintac');
+  req.logout(function(err) {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect('/'); // Redirect to the main page
   });
+});
+
+// User creation route
+router.post('/users', async (req, res) => {
+  try {
+    const { userId, userName, email, avatar } = req.body;
+    const user = new User({
+      userId,
+      userName,
+      email,
+      avatar
+    });
+    await user.save();
+    res.status(201).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create user' });
+  }
 });
 
 module.exports = router;
