@@ -1,23 +1,34 @@
+// routes/index.js
 const express = require('express');
 const router = express.Router();
 const boardController = require('../controllers/boards');
 
 // Get all boards
-router.get('/', boardController.getAllBoards);
+router.get('/', ensureAuthenticated, boardController.getAllBoards);
 
-// Render the board  form
-router.get('/new', boardController.renderNewBoardForm);
+// Render the new board form
+router.get('/new', ensureAuthenticated, boardController.renderNewBoardForm);
 
-// Create a board 
-router.post('/', boardController.createBoard);
+// Create a new board
+router.post('/', ensureAuthenticated, boardController.createBoard);
 
-// Get a board by ID
-router.get('/:id', boardController.getBoardById);
+// View a specific board
+router.get('/:id', ensureAuthenticated, boardController.getBoardById);
 
-// Update a board by ID
-router.put('/:id', boardController.updateBoard);
+// Update a board
+router.put('/:id', ensureAuthenticated, boardController.updateBoard);
 
-// Delete a board by ID
-router.delete('/:id', boardController.deleteBoard);
+// Delete a board
+router.delete('/:id', ensureAuthenticated, boardController.deleteBoard);
+
+// Authentication middleware
+function ensureAuthenticated(req, res, next) {
+  // Check if the user is authenticated
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  // User is not authenticated, redirect to login page or handle as needed
+  res.redirect('/login');
+}
 
 module.exports = router;

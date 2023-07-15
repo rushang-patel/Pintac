@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pintacs - Pin Details</title>
+  <title>All Pins</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 <body>
-  
-  <h1>Pin Details</h1>
-  <div class="/pin">
-    <h2><%= pin.title %></h2>
-    <p><%= pin.description %></p>
-    <img src="<%= pin.image %>" alt="Pin Image">
-  </div>
-  <%- include('./partials/footer') %>
+  <%- include('../partials/header') %>
+  <h1>All Pins</h1>
+  <% pins.forEach((pin) => { %>
+    <div class="pin">
+      <h2><%= pin.title %></h2>
+      <p><%= pin.description %></p>
+      <img src="<%= pin.image %>" alt="Pin Image">
+      <form action="/pins/<%= pin._id %>/delete" method="POST">
+        <button type="submit" class="delete-pin">Delete</button>
+      </form>
+    </div>
+  <% }) %>
+  <%- include('../partials/footer') %>
 </body>
 </html>
+
