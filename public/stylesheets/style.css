@@ -115,6 +115,10 @@ footer{
   text-align: center;
 }
 
+.pin {
+  text-align: center;
+}
+
 .pin-image {
   max-width: 300px;
   max-height: 300px;
