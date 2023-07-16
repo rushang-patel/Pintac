@@ -14,7 +14,7 @@
         <img src="<%= pin.image %>" alt="Pin Image">
       </a>
       <p><%= pin.description %></p>
-      <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p>
+      <!-- <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p> -->
       
       <% if (user && pin.user.toString() === user._id.toString()) { %>
         <form action="/pins/<%= pin._id %>/delete" method="POST">
