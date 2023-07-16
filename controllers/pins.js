@@ -5,7 +5,7 @@ const Comment = require('../models/pin');
 const getAllPins = async (req, res) => {
   try {
     const pins = await Pin.find();
-    res.status(200).json(pins);
+    res.render('pintacs/pin', { pins, title: 'All Pins' }); // Pass the title variable
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch pins" });
   }
@@ -13,30 +13,41 @@ const getAllPins = async (req, res) => {
 
 // Render the new pin form
 const renderNewPinForm = (req, res) => {
-  res.render('pintacs/new', { title: 'New Pin' });
+  res.render('pintacs/new', { title: 'Add Pin' }); // Pass the title variable
 };
 
 // Create a new pin
 const createPin = async (req, res) => {
   try {
-    const pin = new Pin(req.body);
+    const pin = new Pin({
+      title: req.body.title,
+      description: req.body.description,
+      image: req.body.image,
+      user: req.user._id, // Use the authenticated user's ID
+    });
     const savedPin = await pin.save();
-    res.status(201).json(savedPin);
+    console.log('Pin saved:', savedPin);
+    res.redirect('/pins');
   } catch (error) {
+    console.error('Failed to create pin:', error);
     res.status(500).json({ error: "Failed to create pin" });
   }
 };
 
+
 // Get a pin by ID from the database
 const getPinById = async (req, res) => {
   try {
-    const pin = await Pin.findById(req.params.id);
+    const pin = await Pin.findOne({
+      _id: req.params.id,
+      user: req.user._id, // Adjust the query to match the user's pin
+    });
     if (!pin) {
-      return res.status(404).json({ error: "Pin not found" });
+      return res.status(404).json({ error: 'Pin not found' });
     }
-    res.status(200).json(pin);
+    res.render('pin', { pin });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch pin" });
+    res.status(500).json({ error: 'Failed to fetch pin' });
   }
 };
 
@@ -62,7 +73,7 @@ const deletePin = async (req, res) => {
     if (!pin) {
       return res.status(404).json({ error: "Pin not found" });
     }
-    res.status(204).send();
+    res.redirect('/pins'); // Redirect to the pins page after successful deletion
   } catch (error) {
     res.status(500).json({ error: "Failed to delete pin" });
   }
@@ -110,4 +121,6 @@ module.exports = {
   deletePin,
   createComment,
 };
+
+
 

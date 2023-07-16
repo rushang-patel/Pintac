@@ -64,7 +64,6 @@ a {
    padding-bottom: 10px;
    transition: opacity .4s ease-in-out;
    display: inline-block;
-   column-break-inside: avoid;
  }
  
  div#columns figure img {
@@ -101,8 +100,8 @@ a {
    #columns { column-gap: 0px; }
    #columns figure { width: 100%; }
  }
-=======
-.board-user img {
+
+ .board-user img {
   border-radius: 50%;
   height: 40px;
 }
@@ -137,4 +136,13 @@ body{
 footer{
   margin-top: auto;
   text-align: center;
+}
+
+.pin {
+  text-align: center;
+}
+
+.pin-image {
+  max-width: 300px;
+  max-height: 300px;
 }
