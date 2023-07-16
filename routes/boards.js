@@ -1,17 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const boardsCtrl = require('../controllers/boards');
+const boardController = require('../controllers/boards');
 
-//route handles to show all boards
-router.get('/', boardsCtrl.getAllBoards);
+// Get all boards
+router.get('/', boardController.getAllBoards);
 
+// Render the board  form
+router.get('/new', boardController.renderNewBoardForm);
 
-// Route that handles the request to create a new board
-// Maps the 'createBoard' method to the 'boardsCtrl' controller 
-router.post('/', boardsCtrl.createBoard);
+// Create a board 
+router.post('/', boardController.createBoard);
 
-// Route to save a pin to a board
-// Allows user to pin a pin to a specific board by board ID
-router.post('/:boardId/pin', boardsCtrl.pin);
+// Get a board by ID
+router.get('/:id', boardController.getBoardById);
+
+// Update a board by ID
+router.put('/:id', boardController.updateBoard);
+
+// Delete a board by ID
+router.delete('/:id', boardController.deleteBoard);
+
 module.exports = router;
-
