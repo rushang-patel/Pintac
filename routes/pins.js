@@ -22,5 +22,14 @@ router.put('/:id', pinController.updatePin);
 // Delete a pin by ID
 router.post('/:id/delete', pinController.deletePin);
 
+
+const commentController = require('../controllers/pins');
+
+// Define routes for comments
+
+// Create a new comment
+router.post('/pins', commentController.createComment);
+
+
 module.exports = router;
 
