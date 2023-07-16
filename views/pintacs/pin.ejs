@@ -23,7 +23,8 @@
       <h2><%= pin.title %></h2>
       <img src="<%= pin.image %>" alt="Pin Image">
       <p><%= pin.description %></p>
-      <p>Created by: <%= pin.user %></p>
+      <!-- <p>Created by: <%= pin.user %></p> -->
+      <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p>
       
       <% if (user && pin.user.toString() === user._id.toString()) { %>
         <form action="/pins/<%= pin._id %>/delete" method="POST">
@@ -35,5 +36,7 @@
   <%- include('../partials/footer') %>
 </body>
 </html>
+
+
 
 

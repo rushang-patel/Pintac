@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema
 
 // Define the comment schema
@@ -41,5 +40,3 @@ const pinSchema = new mongoose.Schema({
     }
 
 });
-
-module.exports = mongoose.model('Pin', pinSchema);

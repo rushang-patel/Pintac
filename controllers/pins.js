@@ -1,4 +1,5 @@
 const Pin = require('../models/pin');
+const Board = require('../models/board');
 const Comment = require('../models/pin');
 
 // Get all pins from the database
@@ -12,25 +13,33 @@ const getAllPins = async (req, res) => {
 };
 
 // Render the new pin form
-const renderNewPinForm = (req, res) => {
-  res.render('pintacs/new', { title: 'Add Pin' }); // Pass the title variable
+const renderNewPinForm = async (req, res) => {
+  try {
+    const boards = await Board.find();
+    res.render('pintacs/new', { title: 'Add Pin', boards }); // Pass the boards variable
+  } catch (error) {
+    console.error('Failed to fetch boards:', error);
+    res.status(500).json({ error: 'Failed to fetch boards' });
+  }
 };
 
 // Create a new pin
 const createPin = async (req, res) => {
   try {
+    const { title, description, image, boardId } = req.body;
     const pin = new Pin({
-      title: req.body.title,
-      description: req.body.description,
-      image: req.body.image,
-      user: req.user._id, // Use the authenticated user's ID
+      title,
+      description,
+      image,
+      user: req.user._id,
+      board: boardId // Assign the selected board ID to the pin
     });
     const savedPin = await pin.save();
     console.log('Pin saved:', savedPin);
     res.redirect('/pins');
   } catch (error) {
     console.error('Failed to create pin:', error);
-    res.status(500).json({ error: "Failed to create pin" });
+    res.status(500).json({ error: 'Failed to create pin' });
   }
 };
 
@@ -39,8 +48,9 @@ const getPinById = async (req, res) => {
   try {
     const pin = await Pin.findOne({
       _id: req.params.id,
-      user: req.user._id, // Adjust the query to match the user's pin
-    });
+      user: req.user._id,
+    }).populate('board'); // Populate the board field
+
     if (!pin) {
       return res.status(404).json({ error: 'Pin not found' });
     }
@@ -49,6 +59,7 @@ const getPinById = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch pin' });
   }
 };
+
 
 // Update a pin by ID
 const updatePin = async (req, res) => {
