@@ -1,5 +1,6 @@
 const Pin = require('../models/pin');
 const Board = require('../models/board');
+const Comment = require('../models/pin');
 
 // Get all pins from the database
 const getAllPins = async (req, res) => {
@@ -90,6 +91,39 @@ const deletePin = async (req, res) => {
   }
 };
 
+// Create a new comment
+const createComment = async (req, res) => {
+  const { pinId, content, author } = req.body;
+
+  try {
+    // Find the pin by its ID
+    const pin = await Pin.findById(pinId);
+
+    if (!pin) {
+      return res.status(404).json({ error: 'Pin not found' });
+    }
+
+    // Create a new comment
+    const newComment = {
+      content,
+      author,
+    };
+
+    // Add the comment to the pin's comments array
+    pin.comments.push(newComment);
+
+    // Save the updated pin
+    await pin.save();
+
+    // Respond with the created comment
+    res.status(201).json({ comment: newComment });
+  } catch (error) {
+    console.error('Error creating comment:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
   getAllPins,
   renderNewPinForm,
@@ -97,6 +131,7 @@ module.exports = {
   getPinById,
   updatePin,
   deletePin,
+  createComment,
 };
 
 
