@@ -117,6 +117,8 @@ footer{
 
 .pin {
   text-align: center;
+  padding-bottom: 20vmin;
+  border-radius: 5px;
 }
 
 .pin-image {

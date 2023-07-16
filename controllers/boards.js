@@ -4,7 +4,7 @@ const Board = require('../models/board');
 const getAllBoards = async (req, res) => {
   try {
     const boards = await Board.find();
-    res.status(200).json(boards);
+    res.render('pintacs/board', { boards, title: 'All Boards' }); // Pass the title variable
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch boards" });
   }
@@ -18,20 +18,27 @@ const renderNewBoardForm = (req, res) => {
 // Create a new board
 const createBoard = async (req, res) => {
   try {
-    const board = new Board(req.body);
+    const board = new Board({
+      title: req.body.title,
+      description: req.body.description,
+      user: req.user._id, // Use the authenticated user's ID
+    });
+
     const savedBoard = await board.save();
-    res.redirect('/boards'); // Redirect to the boards page after creating the board
+    res.redirect('/boards');
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create board' });
+    console.error('Failed to create board:', error);
+    res.status(500).json({ error: "Failed to create board" });
   }
 };
+
 
 // Get a board by ID from the database
 const getBoardById = async (req, res) => {
   try {
     const board = await Board.findOne({
       _id: req.params.id,
-      user_id: req.user._id,
+      user: req.user._id,
     });
     if (!board) {
       return res.status(404).json({ error: 'Board not found' });
@@ -45,9 +52,7 @@ const getBoardById = async (req, res) => {
 // Update a board by ID
 const updateBoard = async (req, res) => {
   try {
-    const board = await Board.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const board = await Board.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!board) {
       return res.status(404).json({ error: "Board not found" });
     }
@@ -64,7 +69,7 @@ const deleteBoard = async (req, res) => {
     if (!board) {
       return res.status(404).json({ error: "Board not found" });
     }
-    res.status(204).send();
+    res.redirect('/boards'); // Redirect to the boards page after successful deletion
   } catch (error) {
     res.status(500).json({ error: "Failed to delete board" });
   }

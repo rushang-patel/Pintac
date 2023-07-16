@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Pintac</title>
+  <title>Pintac</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-
-  <body>
-    <div class="header-menu">
-        <button type="button" onclick="location.href='/Boards/newboard'" <%= title === 'Add Board' ? 'class="active"' : '' %>>Create Board</button>
-        <button type="button" onclick="location.href='/Boards/new'" <%= title === 'All Boards' ? 'class="active"' : '' %>>View all Boards</button>
-        <button type="button" onclick="location.href='/pins/'" <%= title === 'All Pins' ? 'class="active"' : '' %>>ALL Pins</button>
-        <button type="button" onclick="location.href='/pins/new'" <%= title === 'Add Pin' ? 'class="active"' : '' %>>ADD Pin</button>
-        <button type="button" onclick="location.href='/auth/google'" class="login">LOG IN</button>
-        <button type="button" onclick="location.href='/logout'">LOG OUT</button>
-    </div>  
-  </body>
+</head>
+<body>
+  <div class="header-menu">
+    <button type="button" onclick="location.href='/boards'" <%= title === 'All Boards' ? 'class="active"' : '' %>>View all Boards</button>
+    <button type="button" onclick="location.href='/pins'" <%= title === 'All Pins' ? 'class="active"' : '' %>>All Pins</button>
+    <% if (user) { %>
+      <button type="button" onclick="location.href='/boards/new'" <%= title === 'Add Board' ? 'class="active"' : '' %>>Create Board</button>
+      <button type="button" onclick="location.href='/pins/new'" <%= title === 'Add Pin' ? 'class="active"' : '' %>>Add Pin</button>
+      <a href="/logout" class="logout">LOG OUT</a>
+    <% } else { %>
+      <a href="/auth/google" class="login">LOG IN</a>
+    <% } %>
+  </div>
+</body>
+</html>
