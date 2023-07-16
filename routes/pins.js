@@ -16,23 +16,15 @@ router.post('/', pinController.createPin, (req, res) => {
 // Get a pin by ID
 router.get('/:id', pinController.getPinById);
 
+// Add a comment to a pin
+router.post('/:id/comments', pinController.addComment);
+
 // Update a pin by ID
 router.put('/:id', pinController.updatePin);
 
 // Delete a pin by ID
 router.post('/:id/delete', pinController.deletePin, (req, res) => {
-res.redirect('/pins');
+  res.redirect('/pins');
 });
 
-
-
-const commentController = require('../controllers/pins');
-
-// Define routes for comments
-
-// Create a new comment
-router.post('/pins', commentController.createComment);
-
-
 module.exports = router;
-

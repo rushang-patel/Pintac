@@ -1,14 +1,15 @@
 const Pin = require('../models/pin');
 const Board = require('../models/board');
-const Comment = require('../models/pin');
+const Comment = require('../models/comment');
+const mongoose = require('mongoose');
 
 // Get all pins from the database
 const getAllPins = async (req, res) => {
   try {
-    const pins = await Pin.find();
-    res.render('pintacs/pin', { pins, title: 'All Pins' }); // Pass the title variable
+    const pins = await Pin.find().populate('comments');
+    res.render('pintacs/pin', { pins, title: 'All Pins' });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch pins" });
+    res.status(500).json({ error: 'Failed to fetch pins' });
   }
 };
 
@@ -16,7 +17,7 @@ const getAllPins = async (req, res) => {
 const renderNewPinForm = async (req, res) => {
   try {
     const boards = await Board.find();
-    res.render('pintacs/new', { title: 'Add Pin', boards }); // Pass the boards variable
+    res.render('pintacs/new', { title: 'Add Pin', boards });
   } catch (error) {
     console.error('Failed to fetch boards:', error);
     res.status(500).json({ error: 'Failed to fetch boards' });
@@ -32,7 +33,7 @@ const createPin = async (req, res) => {
       description,
       image,
       user: req.user._id,
-      board: boardId // Assign the selected board ID to the pin
+      board: boardId,
     });
     const savedPin = await pin.save();
     console.log('Pin saved:', savedPin);
@@ -46,17 +47,46 @@ const createPin = async (req, res) => {
 // Get a pin by ID from the database
 const getPinById = async (req, res) => {
   try {
-    const pin = await Pin.findOne({
-      _id: req.params.id,
-      user: req.user._id,
-    }).populate('board'); // Populate the board field
-
+    const pin = await Pin.findById(req.params.id)
+      .populate('board')
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'User',
+        },
+      });
     if (!pin) {
       return res.status(404).json({ error: 'Pin not found' });
     }
     res.render('pin', { pin });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch pin' });
+  }
+};
+
+//Add Comments by ID
+const addComment = async (req, res) => {
+  try {
+    const { text } = req.body;
+    const pin = await Pin.findById(req.params.id);
+
+    if (!pin) {
+      return res.status(404).json({ error: 'Pin not found' });
+    }
+
+    const comment = new Comment({
+      text,
+      user: req.user._id // Assuming the user ID is stored in req.user._id
+    });
+
+    pin.comments.push(comment);
+    await Promise.all([comment.save(), pin.save()]);
+
+    res.redirect('/pins');
+  } catch (error) {
+    console.error('Failed to add comment:', error);
+    res.status(500).json({ error: 'Failed to add comment' });
   }
 };
 
@@ -68,11 +98,11 @@ const updatePin = async (req, res) => {
       new: true,
     });
     if (!pin) {
-      return res.status(404).json({ error: "Pin not found" });
+      return res.status(404).json({ error: 'Pin not found' });
     }
     res.status(200).json(pin);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update pin" });
+    res.status(500).json({ error: 'Failed to update pin' });
   }
 };
 
@@ -80,12 +110,11 @@ const updatePin = async (req, res) => {
 const deletePin = async (req, res) => {
   try {
     const pinId = req.params.id;
-    // Find the pin by ID and delete it
     const deletedPin = await Pin.findByIdAndDelete(pinId);
     if (!deletedPin) {
       return res.status(404).json({ error: 'Pin not found' });
     }
-    res.redirect('/pins'); // Redirect to the pins index page after successful deletion
+    res.redirect('/pins');
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete pin' });
   }
@@ -129,10 +158,9 @@ module.exports = {
   renderNewPinForm,
   createPin,
   getPinById,
+  addComment,
   updatePin,
   deletePin,
   createComment,
 };
-
-
 

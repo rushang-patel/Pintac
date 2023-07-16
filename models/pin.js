@@ -11,10 +11,21 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  board: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Board'
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ]
 });
 
 const pinSchema = new mongoose.Schema({
@@ -39,4 +50,4 @@ const pinSchema = new mongoose.Schema({
         ref: 'Board',
     }
 
-});
+module.exports = Pin;
