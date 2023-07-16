@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const pinSchema = new mongoose.Schema({
 
+const pinSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -26,5 +26,3 @@ const pinSchema = new mongoose.Schema({
 const Pin = mongoose.model('Pin', pinSchema);
 
 module.exports = Pin;
-
-
