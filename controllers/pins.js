@@ -34,7 +34,6 @@ const createPin = async (req, res) => {
   }
 };
 
-
 // Get a pin by ID from the database
 const getPinById = async (req, res) => {
   try {
@@ -69,13 +68,15 @@ const updatePin = async (req, res) => {
 // Delete a pin by ID
 const deletePin = async (req, res) => {
   try {
-    const pin = await Pin.findByIdAndDelete(req.params.id);
-    if (!pin) {
-      return res.status(404).json({ error: "Pin not found" });
+    const pinId = req.params.id;
+    // Find the pin by ID and delete it
+    const deletedPin = await Pin.findByIdAndDelete(pinId);
+    if (!deletedPin) {
+      return res.status(404).json({ error: 'Pin not found' });
     }
-    res.redirect('/pins'); // Redirect to the pins page after successful deletion
+    res.redirect('/pins'); // Redirect to the pins index page after successful deletion
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete pin" });
+    res.status(500).json({ error: 'Failed to delete pin' });
   }
 };
 

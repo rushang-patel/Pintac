@@ -23,12 +23,17 @@
       <h2><%= pin.title %></h2>
       <img src="<%= pin.image %>" alt="Pin Image">
       <p><%= pin.description %></p>
-      <form action="/pins/<%= pin._id %>/delete" method="POST">
-        <button type="submit" class="delete-pin">Delete</button>
-      </form>
+      <p>Created by: <%= pin.user %></p>
+      
+      <% if (user && pin.user.toString() === user._id.toString()) { %>
+        <form action="/pins/<%= pin._id %>/delete" method="POST">
+          <button type="submit" class="delete-pin">Delete</button>
+        </form>
+      <% } %>
     </div>
   <% }) %>
   <%- include('../partials/footer') %>
 </body>
 </html>
+
 

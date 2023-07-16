@@ -1,8 +1,18 @@
-<%- include('./partials/header') %>
-
-<section id="show-boards">
-
-</section>
-
-
-<%- include('./partials/footer') %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pintacs - All Boards</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <h1>All Boards</h1>
+  <% boards.forEach((board) => { %>
+    <div>
+      <h3><%= board.title %></h3>
+      <p><%= board.description %></p>
+    </div>
+  <% }) %>
+  <%- include('../partials/footer') %>
+</body>
+</html>

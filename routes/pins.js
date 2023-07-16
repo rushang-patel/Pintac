@@ -20,7 +20,10 @@ router.get('/:id', pinController.getPinById);
 router.put('/:id', pinController.updatePin);
 
 // Delete a pin by ID
-router.post('/:id/delete', pinController.deletePin);
+router.post('/:id/delete', pinController.deletePin, (req, res) => {
+res.redirect('/pins');
+});
+
 
 
 const commentController = require('../controllers/pins');
