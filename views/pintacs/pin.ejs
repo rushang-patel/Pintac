@@ -12,7 +12,6 @@
       <h2><%= pin.title %></h2>
       <img src="<%= pin.image %>" alt="Pin Image">
       <p><%= pin.description %></p>
-      <!-- <p>Created by: <%= pin.user %></p> -->
       <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p>
       
       <% if (user && pin.user.toString() === user._id.toString()) { %>
@@ -20,12 +19,25 @@
           <button type="submit" class="delete-pin">Delete</button>
         </form>
       <% } %>
+
+      <!-- Add comment form -->
+      <form action="/pins/<%= pin._id %>/comments" method="POST">
+        <input type="text" name="text" placeholder="Add a comment">
+        <button type="submit">Add Comment</button>
+      </form>
+
+      <!-- Display comments -->
+      <% if (pin.comments && pin.comments.length > 0) { %>
+        <div class="comments">
+          <% pin.comments.forEach((comment) => { %>
+            <p><%= comment.text %></p>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p>No comments available</p>
+      <% } %>
     </div>
   <% }) %>
   <%- include('../partials/footer') %>
 </body>
 </html>
-
-
-
-

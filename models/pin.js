@@ -20,7 +20,13 @@ const pinSchema = new mongoose.Schema({
   board: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Board'
-  }
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
+  ]
 });
 
 const Pin = mongoose.model('Pin', pinSchema);
