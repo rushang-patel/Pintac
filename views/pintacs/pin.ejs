@@ -3,25 +3,16 @@
 <head>
   <title>All Pins</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-
-  <title>Comment Section</title>
-  <style>
-    /* Add some basic styles for the comment section */
-    .comment-section {
-      margin-bottom: 20px;
-    }
-    .comment {
-      margin-bottom: 10px;
-    }
-  </style>
 </head>
 <body>
   <%- include('../partials/header') %>
   <h1>All Pins</h1>
-  <% pins.forEach(function(pin) { %>
+  <% pins.forEach((pin) => { %>
     <div class="pin">
-      <h2><%= pin.title %></h2>
-      <img src="<%= pin.image %>" alt="Pin Image">
+      <h2><a href="<%= pin.image %>" target="_blank"><%= pin.title %></a></h2>
+      <a href="<%= pin.image %>" target="_blank">
+        <img src="<%= pin.image %>" alt="Pin Image">
+      </a>
       <p><%= pin.description %></p>
       <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p>
       
@@ -31,27 +22,26 @@
         </form>
       <% } %>
 
+      <!-- Add comment form -->
+      <% if (user) { %>
+        <form action="/pins/<%= pin._id %>/comments" method="POST">
+          <input type="text" name="text" placeholder="Add a comment">
+          <button type="submit">Add Comment</button>
+        </form>
+      <% } %>
+
       <!-- Display comments -->
       <% if (pin.comments && pin.comments.length > 0) { %>
         <div class="comments">
-          <% pin.comments.forEach(function(comment) { %>
+          <% pin.comments.forEach((comment) => { %>
             <p><%= comment.text %></p>
           <% }) %>
         </div>
       <% } else { %>
         <p>No comments available</p>
       <% } %>
-
-      <% if (user) { %>
-        <!-- Add comment form -->
-        <form action="/pins/<%= pin._id %>/comments" method="POST">
-          <input type="text" name="text" placeholder="Add a comment">
-          <button type="submit">Add Comment</button>
-        </form>
-      <% } %>
     </div>
   <% }) %>
   <%- include('../partials/footer') %>
 </body>
 </html>
-
