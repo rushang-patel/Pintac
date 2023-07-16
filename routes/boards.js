@@ -9,9 +9,7 @@ router.get('/', boardController.getAllBoards);
 router.get('/new', boardController.renderNewBoardForm);
 
 // Create a new board
-router.post('/', boardController.createBoard, (req, res) => {
-  res.redirect('/boards');
-});
+router.post('/create', boardController.createBoard);
 
 // Get board by ID
 router.get('/:id', boardController.getBoardById);
@@ -20,6 +18,6 @@ router.get('/:id', boardController.getBoardById);
 router.put('/:id', boardController.updateBoard);
 
 // Delete a board by ID
-router.delete('/:id', boardController.deleteBoard);
+router.post('/:id/delete', boardController.deleteBoard);
 
 module.exports = router;

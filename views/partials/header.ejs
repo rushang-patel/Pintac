@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="header-menu">
+    <button type="button" onclick="location.href='/'">Home</button>
     <button type="button" onclick="location.href='/boards'" <%= title === 'All Boards' ? 'class="active"' : '' %>>View all Boards</button>
     <button type="button" onclick="location.href='/pins'" <%= title === 'All Pins' ? 'class="active"' : '' %>>All Pins</button>
     <% if (user) { %>

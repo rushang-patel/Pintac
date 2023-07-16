@@ -19,12 +19,12 @@ const renderNewBoardForm = (req, res) => {
 const createBoard = async (req, res) => {
   try {
     const board = new Board({
+      user_id: req.user._id, // Set the user_id
       title: req.body.title,
-      description: req.body.description,
-      user: req.user._id, // Use the authenticated user's ID
+      description: req.body.description
     });
-
     const savedBoard = await board.save();
+    console.log('Board saved:', savedBoard);
     res.redirect('/boards');
   } catch (error) {
     console.error('Failed to create board:', error);
@@ -65,15 +65,18 @@ const updateBoard = async (req, res) => {
 // Delete a board by ID
 const deleteBoard = async (req, res) => {
   try {
-    const board = await Board.findByIdAndDelete(req.params.id);
-    if (!board) {
-      return res.status(404).json({ error: "Board not found" });
+    const boardId = req.params.id;
+    // Find the board by ID and delete it
+    const deletedBoard = await Board.findByIdAndDelete(boardId);
+    if (!deletedBoard) {
+      return res.status(404).json({ error: 'Board not found' });
     }
-    res.redirect('/boards'); // Redirect to the boards page after successful deletion
+    res.redirect('/boards'); // Redirect to the boards index page after successful deletion
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete board" });
+    res.status(500).json({ error: 'Failed to delete board' });
   }
 };
+
 
 module.exports = {
   getAllBoards,
