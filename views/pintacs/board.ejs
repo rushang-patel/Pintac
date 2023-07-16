@@ -7,12 +7,18 @@
 <body>
   <%- include('../partials/header') %>
   <h1>All Boards</h1>
-  <% boards.forEach((board) => { %>
-    <div>
-      <h3><%= board.title %></h3>
-      <p><%= board.description %></p>
-    </div>
-  <% }) %>
+<% boards.forEach((board) => { %>
+  <div class="board">
+    <h2><%= board.title %></h2>
+    <p><%= board.description %></p>
+    <% if (user && board.user_id.toString() === user._id.toString()) { %>
+      <form action="/boards/<%= board._id %>/delete" method="POST">
+        <button type="submit" class="delete-board">Delete</button>
+      </form>
+    <% } %>
+  </div>
+<% }) %>
+
   <%- include('../partials/footer') %>
 </body>
 </html>
