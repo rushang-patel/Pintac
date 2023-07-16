@@ -2,24 +2,26 @@
 
 <footer>
     <div class="footer-content">
-      <nav>
-        <ul id="footer-menu">
-          <li><a href="/views/pintacs/pin.ejs">PINS</a></li>
-          <li><a href="/views/pintacs/board.ejs">BOARDS</a></li>
-        </ul>
-      </nav>
+      <button id="back-to-top-btn" onclick="scrollToTop()">Back to Top</button>
+     
       <p>&copy; 2023 PINTAC. All rights reserved.</p>
       <p>Contact: info.contact@help.com</p>
     </div>
   </footer>
   
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const menuItems = document.querySelectorAll('#footer-menu li');
-      menuItems.forEach((item) => {
-        item.style.display = 'inline-block';
-        item.style.marginRight = '10px';
-      });
+    function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
     });
+  }
+    // window.addEventListener('DOMContentLoaded', () => {
+    //   const menuItems = document.querySelectorAll('#footer-menu li');
+    //   menuItems.forEach((item) => {
+    //     item.style.display = 'inline-block';
+    //     item.style.marginRight = '10px';
+    //   });
+    // });
   </script>
   

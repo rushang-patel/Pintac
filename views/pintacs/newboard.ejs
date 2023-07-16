@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-  <%- include('../partials/header') %>
+  <%- include('./partials/header') %>
   <h1>Create a New Board</h1>
   <form action="/boards/create" method="POST">
     <label for="title">Title</label>
@@ -15,7 +15,7 @@
     <textarea id="description" name="description"></textarea>
     <button type="submit">Create Board</button>
   </form>
-  <%- include('../partials/footer') %>
+  <%- include('./partials/footer') %>
 </body>
 </html>
 
