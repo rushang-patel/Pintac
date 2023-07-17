@@ -3,6 +3,11 @@
 Pinterest-like application where users can create boards, save pins to those boards, and share their inspirations with others.
 Features
 
+# Screenshots 
+
+![Screen Shot 2023-07-17 at 10 15 58 AM](https://github.com/rushang-patel/Pintac/assets/135625095/5ae788b3-3bf1-4da1-8cd5-a138538f6786)
+
+
 ## Table of Contents
 
     Features
