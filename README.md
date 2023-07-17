@@ -25,8 +25,8 @@ Features
     View Boards: Users can view all boards to discover and explore inspirations.
     Deployment: The application is deployed on Heroku and can be accessed at:
     
-     https://pintac-3dc0a42401e6.herokuapp.com/.
-
+[    https://pintac-3dc0a42401e6.herokuapp.com
+](https://pintac-3dc0a42401e6.herokuapp.com/)    
 ## Technologies Used
 
     Node.js
