@@ -9,15 +9,22 @@ router.get('/', pinController.getAllPins);
 router.get('/new', pinController.renderNewPinForm);
 
 // Create a new pin
-router.post('/', pinController.createPin);
+router.post('/', pinController.createPin, (req, res) => {
+  res.redirect('/pins');
+});
 
 // Get a pin by ID
 router.get('/:id', pinController.getPinById);
+
+// Add a comment to a pin
+router.post('/:id/comments', pinController.addComment);
 
 // Update a pin by ID
 router.put('/:id', pinController.updatePin);
 
 // Delete a pin by ID
-router.delete('/:id', pinController.deletePin);
+router.post('/:id/delete', pinController.deletePin, (req, res) => {
+  res.redirect('/pins');
+});
 
 module.exports = router;

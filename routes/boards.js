@@ -5,19 +5,19 @@ const boardController = require('../controllers/boards');
 // Get all boards
 router.get('/', boardController.getAllBoards);
 
-// Render the board  form
+// Render the new board form
 router.get('/new', boardController.renderNewBoardForm);
 
-// Create a board 
-router.post('/', boardController.createBoard);
+// Create a new board
+router.post('/create', boardController.createBoard);
 
-// Get a board by ID
+// Get board by ID
 router.get('/:id', boardController.getBoardById);
 
 // Update a board by ID
 router.put('/:id', boardController.updateBoard);
 
 // Delete a board by ID
-router.delete('/:id', boardController.deleteBoard);
+router.post('/:id/delete', boardController.deleteBoard);
 
 module.exports = router;

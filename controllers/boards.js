@@ -4,7 +4,7 @@ const Board = require('../models/board');
 const getAllBoards = async (req, res) => {
   try {
     const boards = await Board.find();
-    res.status(200).json(boards);
+    res.render('pintacs/board', { boards, title: 'All Boards' }); // Pass the title variable
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch boards" });
   }
@@ -12,39 +12,47 @@ const getAllBoards = async (req, res) => {
 
 // Render the new board form
 const renderNewBoardForm = (req, res) => {
-  res.render('boards/new', { title: 'New Board' });
+  res.render('pintacs/newboard', { title: 'New Board' });
 };
 
 // Create a new board
 const createBoard = async (req, res) => {
   try {
-    const board = new Board(req.body);
+    const board = new Board({
+      user_id: req.user._id, // Set the user_id
+      title: req.body.title,
+      description: req.body.description
+    });
     const savedBoard = await board.save();
-    res.status(201).json(savedBoard);
+    console.log('Board saved:', savedBoard);
+    res.redirect('/boards');
   } catch (error) {
+    console.error('Failed to create board:', error);
     res.status(500).json({ error: "Failed to create board" });
   }
 };
 
+
 // Get a board by ID from the database
 const getBoardById = async (req, res) => {
   try {
-    const board = await Board.findById(req.params.id);
+    const board = await Board.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
     if (!board) {
-      return res.status(404).json({ error: "Board not found" });
+      return res.status(404).json({ error: 'Board not found' });
     }
-    res.status(200).json(board);
+    res.render('board', { board });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch board" });
+    res.status(500).json({ error: 'Failed to fetch board' });
   }
 };
 
 // Update a board by ID
 const updateBoard = async (req, res) => {
   try {
-    const board = await Board.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    const board = await Board.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!board) {
       return res.status(404).json({ error: "Board not found" });
     }
@@ -57,15 +65,18 @@ const updateBoard = async (req, res) => {
 // Delete a board by ID
 const deleteBoard = async (req, res) => {
   try {
-    const board = await Board.findByIdAndDelete(req.params.id);
-    if (!board) {
-      return res.status(404).json({ error: "Board not found" });
+    const boardId = req.params.id;
+    // Find the board by ID and delete it
+    const deletedBoard = await Board.findByIdAndDelete(boardId);
+    if (!deletedBoard) {
+      return res.status(404).json({ error: 'Board not found' });
     }
-    res.status(204).send();
+    res.redirect('/boards'); // Redirect to the boards index page after successful deletion
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete board" });
+    res.status(500).json({ error: 'Failed to delete board' });
   }
 };
+
 
 module.exports = {
   getAllBoards,

@@ -1,31 +1,18 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const boardSchema = new Schema({
-    content: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required :false,
-    },
-    user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
-    pins: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Pin',
-        required: true,
-        default: [],
-    },
-    numberOfPins: {
-        type: Number,
-        required: true
-    },
-
+const boardSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String
+  }
 });
 
 const Board = mongoose.model('Board', boardSchema);
