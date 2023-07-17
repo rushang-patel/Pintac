@@ -18,23 +18,67 @@ nav {
   margin-left: 15px;
 }
 
-nav>button{
+
+
+button{
   background: #b5a684;
+  border: 1px solid #b5a684;
+  border-radius: 5px;
+  color: #fefefe;
+  font-size: 15px;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 80px;
+  margin-top: 40px;
+  
+}
+button:hover{
+  background: #fefefe;
+  color: #b5a684;
+  }
+
+.home{
+  height: 100px;
+  width: 100px;
+}
+
+.header-logo{
+  display: inline;
+  float: left;
+  flex-flow: row;
+}
+.header-logo img{
+  height: 100px;
+  width: 100px;
+  margin-right: 50px;
+  }
+
+.login{
+  background: #615437;
   border: 1px solid #b5a684;
   border-radius: 5px;
   color: #fefefe;
   font-size: 14px;
   padding: 5px 10px;
   cursor: pointer;
+  float: right;
+  margin-top: 40px;
+  
 }
-footer>button{
-  background: #b5a684;
+
+.logout{
+  background: #615437;
   border: 1px solid #b5a684;
   border-radius: 5px;
   color: #fefefe;
   font-size: 14px;
   padding: 5px 10px;
+  cursor: pointer;
+  float: right;
+  
 }
+
 a {
   color: #b5a684;
 }

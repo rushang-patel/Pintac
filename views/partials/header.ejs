@@ -8,7 +8,11 @@
 </head>
 <body>
   <div class="header-menu">
-    <button type="button" onclick="location.href='/'">Home</button>
+    <div class="header-logo">
+      <a href="/">
+        <img src="/stylesheets/logo/pintac5.png" alt="Pintac Logo">
+      </a>
+    </div>
     <button type="button" onclick="location.href='/boards'" <%= title === 'All Boards' ? 'class="active"' : '' %>>View all Boards</button>
     <button type="button" onclick="location.href='/pins'" <%= title === 'All Pins' ? 'class="active"' : '' %>>All Pins</button>
     <% if (user) { %>
