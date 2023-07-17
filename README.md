@@ -70,3 +70,4 @@ By navigating through these challenges, we have gained valuable experience and e
     A like feature, so other users can like your content.
     A share function to other applications such as Instagram, Facebook, Twitter, etc
     Camera feature to capture pins on demand
+
