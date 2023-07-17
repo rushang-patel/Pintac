@@ -1,12 +1,37 @@
-<%- include('./partials/header') %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pintacs - All Boards</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+  <h1>All Boards</h1>
+  <% boards.forEach((board) => { %>
+    <div class="board">
+      <h2><%= board.title %></h2>
+      <p><%= board.description %></p>
+      <% if (board.pins && board.pins.length > 0) { %>
+        <div class="pin-preview-container">
+          <% board.pins.forEach((pin) => { %>
+            <div class="pin-preview">
+              <h3><%= pin.title %></h3>
+              <img src="<%= pin.image %>" alt="Pin Image">
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p>No pins available for this board.</p>
+      <% } %>
+      <% if (user && board.user_id.toString() === user._id.toString()) { %>
+        <form action="/boards/<%= board._id %>/delete" method="POST">
+          <button type="submit" class="delete-board">Delete</button>
+        </form>
+      <% } %>
+    </div>
+  <% }) %>
 
-<section id="show-boards">
+  <%- include('../partials/footer') %>
+</body>
+</html>
 
-
-
-
-    
-</section>
-
-
-<%- include('./partials/footer') %>

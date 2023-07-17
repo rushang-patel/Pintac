@@ -1,17 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pintacs - Pin Details</title>
+  <title>All Pins</title>
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 <body>
-  
-  <h1>Pin Details</h1>
-  <div class="/pin">
-    <h2><%= pin.title %></h2>
-    <p><%= pin.description %></p>
-    <img src="<%= pin.image %>" alt="Pin Image">
-  </div>
-  <%- include('./partials/footer') %>
+  <%- include('../partials/header') %>
+  <h1>All Pins</h1>
+  <% pins.forEach((pin) => { %>
+    <div class="pin">
+      <h2><a href="<%= pin.image %>" target="_blank"><%= pin.title %></a></h2>
+      <a href="<%= pin.image %>" target="_blank">
+        <img src="<%= pin.image %>" alt="Pin Image">
+      </a>
+      <p><%= pin.description %></p>
+      <!-- <p>Board: <%= pin.board ? pin.board.title : 'No Board Assigned' %></p> -->
+      
+      <% if (user && pin.user.toString() === user._id.toString()) { %>
+        <form action="/pins/<%= pin._id %>/delete" method="POST">
+          <button type="submit" class="delete-pin">Delete</button>
+        </form>
+      <% } %>
+
+      <!-- Add comment form -->
+      <% if (user) { %>
+        <form action="/pins/<%= pin._id %>/comments" method="POST">
+          <input type="text" name="text" placeholder="Add a comment">
+          <button type="submit">Add Comment</button>
+        </form>
+      <% } %>
+
+      <!-- Display comments -->
+      <% if (pin.comments && pin.comments.length > 0) { %>
+        <div class="comments">
+          <% pin.comments.forEach((comment) => { %>
+            <p><%= comment.text %></p>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p>No comments available</p>
+      <% } %>
+    </div>
+  <% }) %>
+  <%- include('../partials/footer') %>
 </body>
 </html>

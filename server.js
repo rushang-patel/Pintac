@@ -6,9 +6,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var passport = require('passport');
 
-
 require('dotenv').config();
-// connect to the database with AFTER the config vars are processed
 require('./config/database');
 require('./config/passport');
 
@@ -33,15 +31,11 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(function (req, res, next) {
-  res.locals.user = req.user;
-  next();
-});
-
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Add this middleware BELOW passport middleware
+// Custom middleware to set user in res.locals
 app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
@@ -49,7 +43,13 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/pins', pinsRouter);
-app.use('/boards',boardsRouter);
+app.use('/boards', boardsRouter);
+
+// Logout route
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -68,4 +68,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
